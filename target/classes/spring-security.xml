@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/security
+                           http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <!-- Enable Spring Security -->
+    <security:http auto-config="true">
+        <!-- Define URL patterns and access rules -->
+        <security:intercept-url pattern="/add-product/**" access="hasRole('ROLE_USER')" />
+        <security:intercept-url pattern="/update/**" access="hasRole('ROLE_USER')" />
+        <security:intercept-url pattern="/delete/**" access="hasRole('ROLE_USER')" />
+        <security:intercept-url pattern="/**" access="permitAll" />
+    </security:http>
+
+    <!-- Define an authentication manager -->
+    <security:authentication-manager>
+        <security:authentication-provider>
+            <!-- In-memory user credentials -->
+            <security:user-service>
+                <security:user name="tushar" password="{bcrypt}$2a$12$uBSDSafFzSQqLXUenoAd6OQspBXtrBswY1o/1s4HJkbXFwHF3UGb2" authorities="ROLE_USER" />
+            </security:user-service>
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+</beans>
